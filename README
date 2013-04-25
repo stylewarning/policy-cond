@@ -1,0 +1,29 @@
+                             POLICY-COND
+                             ===========
+
+                           By Robert Smith
+
+POLICY-COND is a macro in order to select certain code paths based on
+the current optimize compiler policy.
+
+For example, given the following code:
+
+(declaim (optimize (speed 0) (safety 3)))
+
+(defun test-cond ()
+  (policy-cond
+    ((> speed safety) (+ 1 1))
+    ((= speed safety) (+ 2 2))
+    ((< speed safety) (+ 3 3))))
+
+The function TEST-COND will get compiled as if it were
+
+(defun test-cond ()
+  (+ 3 3))
+
+The optimize qualities SPEED, SAFETY, DEBUG, and COMPILATION-SPEED are
+guaranteed by an implementation. They can be used as if they are
+lexically bound.
+
+Currently, any expression for the policy expression can be used. In
+the future, this might change to a limited set of operators.
