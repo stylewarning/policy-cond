@@ -5,6 +5,7 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (defun get-policy (env)
+    "Get the optimize policy information for the environment ENV."
     #+sbcl
     (sb-cltl2:declaration-information 'optimize env)
     
