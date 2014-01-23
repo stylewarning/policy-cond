@@ -34,4 +34,7 @@ is akin to CL:IF.
 Finally there is another package, POLICY, which exports IF, which is
 intended to be used with reader macros. For example,
 
-    #+#.(policy:if (<= speed safety)) (declare (type fixnum x))
+    #+#.(policy:if (<= speed safety)) (safe-algorithm)
+
+
+See also: https://bitbucket.org/tarballs_are_good/parameterized-function
