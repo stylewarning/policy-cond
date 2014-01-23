@@ -36,5 +36,13 @@ intended to be used with reader macros. For example,
 
     #+#.(policy:if (<= speed safety)) (safe-algorithm)
 
+Note that this does not work with local declarations. See
 
-See also: https://bitbucket.org/tarballs_are_good/parameterized-function
+    http://clhs.lisp.se/Body/s_declar.htm#declare
+
+for details.
+
+
+For similar functionality for static function dispatch, see:
+
+    https://bitbucket.org/tarballs_are_good/parameterized-function
