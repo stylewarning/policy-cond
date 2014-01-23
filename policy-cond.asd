@@ -7,5 +7,6 @@
   :maintainer "Robert Smith <quad@symbo1ics.com>"
   :license "Public Domain"
   :components ((:file "package")
-               (:file "policy-cond")))
+               (:file "policy-cond")
+               (:file "policy")))
 

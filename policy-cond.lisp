@@ -28,6 +28,9 @@
        ,expr)))
 
 (defmacro policy-if (expr then else &environment env)
+  "If the policy expression EXPR is true, then expand into THEN,
+otherwise into ELSE. The policy expression is as described in
+POLICY-COND."
   (if (eval `(policy ,expr ,env))
       then
       else))
