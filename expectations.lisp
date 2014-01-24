@@ -22,22 +22,42 @@ EXPECTATIONS should be lists of one of the following forms.
 
 
 "
-  (labels ((parse-safe-expectation (e)
+  (labels ((keywordify (s)
+             (intern (symbol-name s) :keyword))
+           
+           (validate-expectation (e)
              (assert (listp e) (e) "Expected an expectation clause. Got ~S" e)
-             (ecase (intern (symbol-name (car e)) :keyword)
+             (case (keywordify (car e))
+               ((:type)
+                (assert (cdr e) () "Invalid type expectation: ~S" e)
+                (assert (cddr e) () "Empty variable/expression list in type expectation: ~S"
+                        e))
+               
+               ((:assertion)
+                (assert (and (cdr e)
+                             (null (cddr e)))
+                        ()
+                        "Invalid assertion expectation: ~S"
+                        e))
+               
+               (otherwise (warn "Ignoring unrecognized expectation: ~S" e))))
+           
+           (parse-safe-expectation (e)
+             (case (keywordify (car e))
                ((:type) (let ((type (second e))
                               (vars (cddr e)))
                           (mapcar (lambda (var)
                                     `(check-type ,var ,type))
                                   vars)) )
                ((:assertion) (list `(assert ,(second e))))))
+           
            (parse-speedy-expectation (e)
-             (assert (listp e) (e) "Expected an expectation clause. Got ~S" e)
-             (ecase (intern (symbol-name (car e)) :keyword)
+             (case (keywordify (car e))
                ((:type) (let ((type (second e))
                               (vars (remove-if-not #'symbolp (cddr e))))
                           (list `(type ,type ,@vars))))
                ((:assertion) nil))))
+    (mapc #'validate-expectation expectations)
     `(policy-if
       ,policy
       ,(if (null expectations)
