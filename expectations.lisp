@@ -19,8 +19,6 @@ EXPECTATIONS should be lists of one of the following forms.
 
       Assert that the assertion <assertion> should be true. If the
       POLICY is met, then the assertion will be elided at runtime.
-
-
 "
   (labels ((keywordify (s)
              (intern (symbol-name s) :keyword))
