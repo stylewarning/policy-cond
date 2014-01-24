@@ -65,7 +65,7 @@ is best described with an example.
       (with-expectations (> speed safety)
           ((type unsigned-byte         n)
            (type (vector single-float) vec)
-           (assertion (< 0 n (length vec))))
+           (assertion (< n (length vec))))
         (aref vec n)))
 
 If the policy expression is not satisfied, then it will expand into
@@ -73,7 +73,7 @@ If the policy expression is not satisfied, then it will expand into
     (PROGN
       (CHECK-TYPE N UNSIGNED-BYTE)
       (CHECK-TYPE VEC (VECTOR SINGLE-FLOAT))
-      (ASSERT (< 0 N (LENGTH VEC)))
+      (ASSERT (< N (LENGTH VEC)))
       (AREF VEC N))
 
 But if it is satisfied, it will expand into
