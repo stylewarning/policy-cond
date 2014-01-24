@@ -8,5 +8,6 @@
   :license "Public Domain"
   :components ((:file "package")
                (:file "policy-cond")
+               (:file "expectations")
                (:file "policy")))
 

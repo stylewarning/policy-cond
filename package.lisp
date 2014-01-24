@@ -6,7 +6,9 @@
   (:use #:cl)
   (:export
    #:policy-if
-   #:policy-cond))
+   #:policy-cond)
+  (:export
+   #:with-expectations))
 
 (defpackage #:policy
   (:use #:cl)

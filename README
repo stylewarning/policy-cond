@@ -3,6 +3,9 @@
 
                            By Robert Smith
 
+Expansion based on Policy
+-------------------------
+                           
 POLICY-COND is a macro in order to select certain code paths based on
 the current optimize compiler policy.
 
@@ -42,6 +45,57 @@ Note that this does not work with local declarations. See
 
 for details.
 
+
+Expectations
+------------
+
+An "expectation" is something the programmer expects to be true, but
+could be wrong if the consumer of the code makes a logical
+error. Expectations usually have different behavior in testing and
+production environments. When testing, it is permitted that code be
+slower due to sanity checking, and in production (after considerable
+testing), it may make sense to remove extra sanity checking and add
+speed improvements.
+
+POLICY-COND offers the notion of an expectation, which can change with
+policy. The macro POLICY-COND:WITH-EXPECTATIONS accomplishes this. It
+is best described with an example.
+
+    (defun vector-item (vec n)
+      (with-expectations (> speed safety)
+          ((type unsigned-byte         n)
+           (type (vector single-float) vec)
+           (assertion (< 0 n (length vec))))
+        (aref vec n)))
+
+If the policy expression is not satisfied, then it will expand into
+
+    (PROGN
+      (CHECK-TYPE N UNSIGNED-BYTE)
+      (CHECK-TYPE VEC (VECTOR SINGLE-FLOAT))
+      (ASSERT (< 0 N (LENGTH VEC)))
+      (AREF VEC N))
+
+But if it is satisfied, it will expand into
+
+    (LOCALLY (DECLARE (TYPE UNSIGNED-BYTE N)
+                      (TYPE (VECTOR SINGLE-FLOAT) VEC))
+      (AREF VEC N))
+
+In other words, we can read
+
+    (with-expectations POLICY (EXPECTATIONS...) BODY...)
+
+as
+
+    "With the expectation that EXPECTATIONS are met when POLICY is
+    true, execute BODY. Otherwise, ensure that they're true."
+
+
+
+
+See Also
+--------
 
 For similar functionality for static function dispatch, see:
 
