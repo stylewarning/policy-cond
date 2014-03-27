@@ -4,25 +4,28 @@
 (in-package #:policy-cond)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (defun declaration-information (&optional env)
-    "Get the optimize policy information for the environment ENV."
+  (defun declaration-information (symbol &optional env)
+    "Get the declaration information for the environment ENV."
     #+sbcl
-    (sb-cltl2:declaration-information 'optimize env)
+    (sb-cltl2:declaration-information symbol env)
     
     #+lispworks
-    (hcl:declaration-information 'optimize env)
+    (hcl:declaration-information symbol env)
     
     #+cmucl
-    (ext:declaration-information 'optimize env)
+    (ext:declaration-information symbol env)
 
     #+ccl
-    (ccl:declaration-information 'optimize env)
+    (ccl:declaration-information symbol env)
     
-    #-(or sbcl lispworks cmucl ccl)
+    #+allegro
+    (system:declaration-information symbol env)
+    
+    #-(or sbcl lispworks cmucl ccl allegro)
     (error "Declaration information is unavailable for this implementation.")))
 
 (defmacro policy (expr env)
-  (let ((policy (declaration-information env) ))
+  (let ((policy (declaration-information 'optimize env)))
     `(let ,policy
        (declare (ignorable ,@(mapcar #'car policy)))
        ,expr)))
@@ -56,7 +59,7 @@ POLICY. Once BODY has finished executing, restore the compiler policy
 to its original state.
 
 For local declarations, use LOCALLY."
-  (let ((saved-policy (declaration-information env)))
+  (let ((saved-policy (declaration-information 'optimize env)))
     `(unwind-protect (progn
                        (proclaim '(optimize ,@policy))
                        ,@body)
