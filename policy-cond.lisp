@@ -4,7 +4,7 @@
 (in-package #:policy-cond)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (defun get-policy (env)
+  (defun declaration-information (&optional env)
     "Get the optimize policy information for the environment ENV."
     #+sbcl
     (sb-cltl2:declaration-information 'optimize env)
@@ -22,7 +22,7 @@
     (error "Declaration information is unavailable for this implementation.")))
 
 (defmacro policy (expr env)
-  (let ((policy (get-policy env) ))
+  (let ((policy (declaration-information env) ))
     `(let ,policy
        (declare (ignorable ,@(mapcar #'car policy)))
        ,expr)))
@@ -50,3 +50,14 @@ the current compiler policy."
                   (progn ,@(cdar cases))
                   (policy-cond ,@(cdr cases)))))
 
+(defmacro with-policy (policy &body body &environment env)
+  "Execute the body BODY with the global optimize policy set to
+POLICY. Once BODY has finished executing, restore the compiler policy
+to its original state.
+
+For local declarations, use LOCALLY."
+  (let ((saved-policy (declaration-information env)))
+    `(unwind-protect (progn
+                       (proclaim '(optimize ,@policy))
+                       ,@body)
+       (proclaim '(optimize ,@saved-policy)))))

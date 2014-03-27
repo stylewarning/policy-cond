@@ -5,8 +5,10 @@
 (defpackage #:policy-cond
   (:use #:cl)
   (:export
+   #:declaration-information
    #:policy-if
-   #:policy-cond)
+   #:policy-cond
+   #:with-policy)
   (:export
    #:with-expectations))
 
