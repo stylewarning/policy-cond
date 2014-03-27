@@ -120,10 +120,7 @@ EXPECTATIONS should be lists of one of the following forms.
              `(progn
                 ,@preamble-forms
                 ,@body)
-             (let ((result (gensym "RESULT-"))
-                   (i      (gensym "I-"))
-                   (type   (gensym "TYPE-"))
-                   (value  (gensym "VALUE-")))
+             (let ((result (gensym "RESULT-")))
                (if (= 1 (length return-types))
                    ;; The simple case of one return type.
                    `(progn
