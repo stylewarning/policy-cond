@@ -3,7 +3,22 @@
 
                            By Robert Smith
 
-Expansion based on Policy
+Environment Introspection
+-------------------------
+
+This library provides an interface to the CLtL2 environment
+functions. Currently, only DECLARATION-INFORMATION is supported.
+
+
+Temporarily Setting and Restoring Optimize Policy
+-------------------------------------------------
+
+One can use WITH-POLICY to temporarily set the global optimize policy
+for e.g. loading systems. The original policy will be restored upon
+completion.
+
+
+Expansion Based on Policy
 -------------------------
                            
 POLICY-COND is a macro in order to select certain code paths based on
