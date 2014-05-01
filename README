@@ -106,6 +106,9 @@ as
     "With the expectation that EXPECTATIONS are met when POLICY is
     true, execute BODY. Otherwise, ensure that they're true."
 
+See the documentation string for WITH-EXPECTATIONS to see the kinds of
+expectation clauses supported.
+
 
 See Also
 --------

@@ -32,6 +32,11 @@ EXPECTATIONS should be lists of one of the following forms.
      <resulting action>. If the POLICY is met, elide the check and
      action. This clause is principally used for having special
      conditions get raised.
+
+    Inline Expectation: (INLINE [<symbol>*])
+
+     Inline the functions designated by the symbols <symbol> if POLICY
+     is met.
 "
   (let ((preamble-forms     nil)
         (local-declarations nil)
@@ -48,6 +53,11 @@ EXPECTATIONS should be lists of one of the following forms.
                           e))
                  
                  ((:returns) nil)
+                 
+                 ((:inline) (assert (every #'symbolp (cdr e))
+                                    ()
+                                    "Invalid inline expectation received non-symbols: ~{~S~^, ~}"
+                                    (remove-if #'symbolp (cdr e))))
                  
                  ((:assertion)
                   (assert (and (cdr e)
@@ -83,7 +93,10 @@ EXPECTATIONS should be lists of one of the following forms.
                             (push `(type ,type ,@vars) local-declarations)))
                  ((:returns) nil)   ; This will already have been parsed.
                  ((:assertion) nil)
-                 ((:or-else) nil))))
+                 ((:or-else) nil)
+                 ((:inline) (let ((syms (cdr e)))
+                              (when syms
+                                (push `(inline ,@(cdr e)) local-declarations))) ))))
 
       ;; Validate the expectations.
       (mapc #'validate-expectation expectations)
