@@ -3,6 +3,22 @@
 
                            By Robert Smith
 
+(Un)License
+-----------
+
+Please see the file UNLICENSE for more information about how this
+software has been placed in the public domain.
+
+As an addendum, I ask (though not require) that any improvements made
+to this software be sent to the maintaner as listed in the ASDF
+file. I also ask (though not require) that if this software is used
+commercially, a notice such as the following be placed along the other
+license statements in your software distribution:
+
+    POLICY-COND, a software library released into the Public Domain,
+    by Robert Smith <quad@symbo1ics.com>.
+
+
 Environment Introspection
 -------------------------
 
@@ -16,6 +32,9 @@ Temporarily Setting and Restoring Optimize Policy
 One can use WITH-POLICY to temporarily set the global optimize policy
 for e.g. loading systems. The original policy will be restored upon
 completion.
+
+WITH-POLICY should not be used with local declarations. In that case,
+one should use LOCALLY.
 
 
 Expansion Based on Policy
