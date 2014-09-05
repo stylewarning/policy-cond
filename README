@@ -3,20 +3,10 @@
 
                            By Robert Smith
 
-(Un)License
------------
+License
+-------
 
-Please see the file UNLICENSE for more information about how this
-software has been placed in the public domain.
-
-As an addendum, I ask (though not require) that any improvements made
-to this software be sent to the maintainer as listed in the ASDF
-file. I also ask (though not require) that if this software is used
-commercially, a notice such as the following be placed along the other
-license statements in your software distribution:
-
-    POLICY-COND, a software library released into the Public Domain,
-    by Robert Smith <quad@symbo1ics.com>.
+This software is licensed under BSD 3-clause license. Please see LICENSE.
 
 
 Environment Introspection

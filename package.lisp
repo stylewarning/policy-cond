@@ -1,6 +1,6 @@
 ;;;; package.lisp
 ;;;;
-;;;; Author: Robert Smith
+;;;; Copyright (c) 2014 Robert Smith
 
 (defpackage #:policy-cond
   (:use #:cl)

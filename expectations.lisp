@@ -1,6 +1,6 @@
 ;;;; expectations.lisp
 ;;;;
-;;;; Author: Robert Smith
+;;;; Copyright (c) 2014 Robert Smith
 
 (in-package #:policy-cond)
 
