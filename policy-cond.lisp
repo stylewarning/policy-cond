@@ -9,19 +9,19 @@
     "Get the declaration information for the environment ENV."
     #+sbcl
     (sb-cltl2:declaration-information symbol env)
-    
+
     #+lispworks
     (hcl:declaration-information symbol env)
-    
+
     #+cmucl
     (ext:declaration-information symbol env)
 
     #+ccl
     (ccl:declaration-information symbol env)
-    
+
     #+allegro
     (system:declaration-information symbol env)
-    
+
     #-(or sbcl lispworks cmucl ccl allegro)
     (error "Declaration information is unavailable for this implementation.")))
 
@@ -38,7 +38,7 @@ POLICY-COND."
   (if (eval `(policy ,expr ,env))
       then
       else))
-  
+
 (defmacro policy-cond (&body cases)
   "Like COND, except each clause predicate is a policy expression. A
 policy expression is a boolean expression using optimize declaration
