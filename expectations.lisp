@@ -109,6 +109,9 @@ EXPECTATIONS should be lists of one of the following forms.
       ;; Parse the expectations.
       (mapc #'parse-safe-expectation expectations)
       (mapc #'parse-speedy-expectation expectations)
+      ;; All of the forms are pushed into a list in order. Reverse
+      ;; them so they're applied in the order they were presented.
+      (setf preamble-forms (nreverse preamble-forms))
       
       ;; Construct the policy form.
       `(policy-if
