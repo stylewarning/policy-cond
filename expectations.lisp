@@ -59,7 +59,11 @@ EXPECTATIONS should be lists of one of the following forms.
                                     "Invalid inline expectation received non-symbols: ~{~S~^, ~}"
                                     (remove-if #'symbolp (cdr e))))
                  
-                 ((:assertion) nil)
+                 ((:assertion)
+                  (assert (cdr e)
+                          ()
+                          "Invalid assertion expectation: ~S"
+                          e))
                  
                  ((:or-else)
                   (assert (= 2 (length (cdr e)))
