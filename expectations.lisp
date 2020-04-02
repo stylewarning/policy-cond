@@ -21,7 +21,7 @@ EXPECTATIONS should be lists of one of the following forms.
       types indicate multiple values are returned. If the POLICY is
       met, then the assertion will be elided at runtime.
 
-    Assertion Expectation: (ASSERTION <assertion>)
+    Assertion Expectation: (ASSERTION <assertion> [(place*) [datum-form argument-form*]])
 
       Assert that the assertion <assertion> should be true. If the
       POLICY is met, then the assertion will be elided at runtime.
@@ -59,12 +59,7 @@ EXPECTATIONS should be lists of one of the following forms.
                                     "Invalid inline expectation received non-symbols: ~{~S~^, ~}"
                                     (remove-if #'symbolp (cdr e))))
                  
-                 ((:assertion)
-                  (assert (and (cdr e)
-                               (null (cddr e)))
-                          ()
-                          "Invalid assertion expectation: ~S"
-                          e))
+                 ((:assertion) nil)
                  
                  ((:or-else)
                   (assert (= 2 (length (cdr e)))
@@ -81,7 +76,7 @@ EXPECTATIONS should be lists of one of the following forms.
                             (dolist (var vars)
                               (push `(check-type ,var ,type) preamble-forms))))
                  ((:returns) (setq return-types (cdr e)))
-                 ((:assertion) (push `(assert ,(second e)) preamble-forms))
+                 ((:assertion) (push `(assert ,@(cdr e)) preamble-forms))
                  ((:or-else) (push `(unless ,(second e)
                                       ,(third e))
                                    preamble-forms))))
