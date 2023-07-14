@@ -10,6 +10,8 @@
   :license "BSD 3-clause (See LICENSE)"
   :depends-on (
                #+sbcl sb-cltl2          ; This is a contrib.
+               (:feature (:not (:or :sbcl :lispworks :cmucl :ccl :allegro))
+                          :cl-environments)
                )
   :serial t
   :components ((:static-file "LICENSE.txt")
