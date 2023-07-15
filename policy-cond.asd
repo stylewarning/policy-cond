@@ -8,11 +8,10 @@
   :author "Robert Smith <quad@symbo1ics.com>"
   :maintainer "Robert Smith <quad@symbo1ics.com>"
   :license "BSD 3-clause (See LICENSE)"
-  :depends-on (
-               #+sbcl sb-cltl2          ; This is a contrib.
+  :depends-on ((:feature :sbcl
+                :sb-cltl2) ; An SBCL contrib enacapsulated via ASDF
                (:feature (:not (:or :sbcl :lispworks :cmucl :ccl :allegro))
-                          :cl-environments)
-               )
+                :cl-environments))
   :serial t
   :components ((:static-file "LICENSE.txt")
                (:file "package")
