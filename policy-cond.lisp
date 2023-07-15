@@ -23,7 +23,7 @@
     (system:declaration-information symbol env)
 
     #-(or sbcl lispworks cmucl ccl allegro)
-    (error "Declaration information is unavailable for this implementation.")))
+    (cl-environments.cltl2:declaration-information symbol env)))
 
 (defmacro policy (expr env)
   (let ((policy (declaration-information 'optimize env)))
