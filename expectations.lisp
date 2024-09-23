@@ -155,7 +155,7 @@ EXPECTATIONS should be lists of one of the following forms.
                                 (length ,result))
                         ,@(loop :for i :from 0
                                 :for type :in return-types
-                                :collect `(unless (typep (nth ,i ,result))
+                                :collect `(unless (typep (nth ,i ,result) ',type)
                                             (error 'simple-type-error
                                                    :format-control ,(format nil "The ~:R value returned, ~~S, is not of type ~S."
                                                                             (1+ i)
